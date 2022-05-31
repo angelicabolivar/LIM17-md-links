@@ -47,6 +47,7 @@ function readDirectories(ruta) {
       rutas.push(rutaUnida);
     }
   })
+  // console.log('lo que retorna readDirectories', rutas);
   return rutas
 
 };

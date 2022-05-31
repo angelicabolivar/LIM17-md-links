@@ -8,10 +8,8 @@ const options = {
   validate : process.argv.includes('--validate'),
   stats : process.argv.includes('--stats')
 }
-// console.log(options)
 
 
-// console.log(inputPath);
 mdLinks(inputPath, options)
 .then(response =>{
   console.log('CLI:',response)

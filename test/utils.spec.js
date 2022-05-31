@@ -3,6 +3,8 @@ const utils = require('../src/utils.js');
 const testRouteRelative = './test/data/file.md'
 const testRouteFolder = './test/data/'
 const testRouteAbsolute = 'C:\\Users\\viang\\Desktop\\LIM17-md-links\\test\\data\\file.md'
+const testRouteFolderAboslute = 'C:\\Users\\viang\\Desktop\\LIM17-md-links\\test\\data'
+
 const testFile = `[Google](https://google.com) es un lenguaje de marcado
 ligero muy popular entre developers. Es usado en muchísimas plataformas que
 manejan texto plano (GitHub, foros, blogs, ...), y es muy común
@@ -37,6 +39,11 @@ const arrayLinks = [
   ruta: 'C:\\Users\\viang\\Desktop\\LIM17-md-links\\test\\data\\file.md'
 },
 ]
+const arrayDirectory = [
+    'C:\\Users\\viang\\Desktop\\LIM17-md-links\\test\\data\\data2\\file.md',
+    'C:\\Users\\viang\\Desktop\\LIM17-md-links\\test\\data\\file.md'
+]
+
 
 describe('utils.existPath' , () => {
   it('if the route exist should return true', () => {
@@ -74,3 +81,10 @@ describe('utils.getLinks', () => {
     expect(expected).toStrictEqual(arrayLinks)
   })
 });
+
+describe('readDirectories', () => {
+  it('it should read a directory and return a list of paths', () =>{
+    expect(utils.readDirectories(testRouteFolderAboslute)).toStrictEqual(arrayDirectory)
+  })
+});
+
