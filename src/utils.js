@@ -18,7 +18,7 @@ const getFileExtension = (ruta) => Path.extname(ruta)
 
 const getLinks = (file, ruta) => {
 
-    const regExp = /\[(.*?)\]\((.*?)\)/gm;
+    const regExp = /\[(.*?)\]\(h(.*?)\)/gm;
     const arrayRegExp = file.match(regExp);
     
     const arrayObject = arrayRegExp.map((item) => {
