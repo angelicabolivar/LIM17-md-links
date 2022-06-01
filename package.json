@@ -10,7 +10,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "test",
+    "test": "jest --coverage",
+    "ejemplos": "node ./src/ejemplo.js",
     "start": "node ./src/index.js"
   },
   "repository": {
@@ -28,8 +29,14 @@
   "bugs": {
     "url": "https://github.com/angelicabolivar/LIM17-md-links/issues"
   },
-  "bin":{
+  "bin": {
     "md-links": "./src/cli.js"
   },
-  "homepage": "https://github.com/angelicabolivar/LIM17-md-links#readme"
+  "homepage": "https://github.com/angelicabolivar/LIM17-md-links#readme",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
 }

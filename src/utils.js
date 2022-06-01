@@ -1,62 +1,75 @@
 const fs = require("fs");
-const path = require('path');
+const { resolve } = require("path");
+const Path = require('path');
 
 //si la ruta existe
 const existPath = (ruta) => fs.existsSync(ruta);
 
-const isAbsolute = (ruta) => path.isAbsolute(ruta) 
+const isAbsolute = (ruta) => Path.isAbsolute(ruta);
 
-const convertAbsolute = (ruta) => path.resolve(ruta)
+const convertAbsolute = (ruta) => Path.resolve(ruta);
 
-const isFolder = (ruta) => fs.statSync(ruta).isDirectory()
+const isFolder = (ruta) => fs.statSync(ruta).isDirectory();
+
+const getFileExtension = (ruta) => Path.extname(ruta)
 
 
-const readFolder = (ruta) => {
-  fs.readdir(ruta, (err , data) => {
 
-    if(err){
-      throw err
+
+const getLinks = (file, ruta) => {
+
+    const regExp = /\[(.*?)\]\((.*?)\)/gm;
+    const arrayRegExp = file.match(regExp);
+    
+    const arrayObject = arrayRegExp.map((item) => {
+    const objLink = {
+      text: item.slice(1,item.indexOf(']')),
+      href: item.slice(item.indexOf('(') + 1,item.indexOf(')')),
+      ruta,
     }
-    // console.log(data);
-    return data
+    
+     return objLink
+  
   })
+  return arrayObject
+  
 }
 
+function readDirectories(ruta) {
+  let rutas = []
+  const fileList = fs.readdirSync(ruta)
+  fileList.forEach((file) => {
+    rutaUnida = Path.join(ruta, file);
+    if (fs.statSync(rutaUnida).isDirectory()) {
+      const rutas2 = readDirectories(rutaUnida)
+      rutas = rutas.concat(rutas2)
+    } else if(getFileExtension(rutaUnida) === '.md'){
+      rutas.push(rutaUnida);
+    }
+  })
+  // console.log('lo que retorna readDirectories', rutas);
+  return rutas
 
+};
 
 const readFile = (ruta) =>{
-  fs.readFile(ruta, (err , data) =>{
+  const file = fs.readFileSync(ruta, 'utf8')
 
-    if(err){
-      throw err
-    }
-    // console.log(data.toString());
-    return data
-  });
+  const links = getLinks(file, ruta)
+  return links
 }
-
-
-const getFileExtension = (ruta) => path.extname(ruta)
-
 
 module.exports= {
   existPath,
   isAbsolute,
   convertAbsolute,
   isFolder,
-  readFolder,
   readFile,
   getFileExtension,
+  getLinks, 
+  readDirectories,
 }
 
 
 
-// const param = (p) => {
-//   let index= process.argv.indexOf(p); 
-//   return process.argv[index - 1]; 
-// }
 
-
-// let ruta1= param('--ruta');
-// console.log(ruta1);
-// console.log(process.argv);
