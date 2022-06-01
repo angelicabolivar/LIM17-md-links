@@ -33,9 +33,9 @@ const mdLinks = (path, options) => {
          reject('No es un archivo .md')
       }
       const links = utils.readFile(path);
-      // console.log(links)
+      
       if(options.validate && options.stats){
-        // console.log(uniqueArray);
+        
         const arrayPromise = links.map(elem => {
           return fetch(elem.href)
           .then(response => {
@@ -46,7 +46,7 @@ const mdLinks = (path, options) => {
         })
         return Promise.all(arrayPromise)
         .then(linksStatus =>{
-          // console.log(response)
+          
           const uniqueData = new Set(links);
           let uniqueArray =[...uniqueData];
           let broken = 0;
@@ -73,7 +73,7 @@ const mdLinks = (path, options) => {
         })
         return Promise.all(arrayPromise)
           .then(response =>{
-            // console.log(response)
+            
             resolve(response); 
           })
           
@@ -82,8 +82,6 @@ const mdLinks = (path, options) => {
 
         const uniqueData = new Set(links);
         let uniqueArray =[...uniqueData];
-        // console.log(uniqueArray);
-
 
         resolve({
           total : links.length,
@@ -93,7 +91,6 @@ const mdLinks = (path, options) => {
 
       resolve(links); 
 
-      // console.log(arrayPromise)
       
     }
   });
